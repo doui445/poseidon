@@ -1,6 +1,6 @@
 package com.nnk.poseidon.controllers;
 
-import com.nnk.poseidon.domain.BidList;
+import com.nnk.poseidon.model.BidList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

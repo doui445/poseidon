@@ -1,6 +1,6 @@
 package com.nnk.poseidon.controllers;
 
-import com.nnk.poseidon.domain.User;
+import com.nnk.poseidon.model.User;
 import com.nnk.poseidon.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

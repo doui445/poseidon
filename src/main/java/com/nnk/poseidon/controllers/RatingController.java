@@ -1,6 +1,6 @@
 package com.nnk.poseidon.controllers;
 
-import com.nnk.poseidon.domain.Rating;
+import com.nnk.poseidon.model.Rating;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

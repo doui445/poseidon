@@ -1,6 +1,6 @@
 package com.nnk.poseidon.controllers;
 
-import com.nnk.poseidon.domain.Trade;
+import com.nnk.poseidon.model.Trade;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
