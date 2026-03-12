@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Curve Points</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: headerNav}"></div>
+
+<div class="container">
+	<div class="row mb-3">
+		<div class="col-6"><h2>Curve Point List</h2></div>
+		<div class="col-6 text-right">
+			<a class="btn btn-primary btn-sm" th:href="@{/curvepoint/add}">Add New</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-bordered table-striped">
+			<thead>
+			<tr>
+				<th>Id</th>
+				<th>Curve Id</th>
+				<th>As Of Date</th>
+				<th>Term</th>
+				<th>Value</th>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="cp : ${curvePoints}">
+				<td th:text="${cp.id}"></td>
+				<td th:text="${cp.curveId}"></td>
+				<td th:text="${cp.asOfDate}"></td>
+				<td th:text="${cp.term}"></td>
+				<td th:text="${cp.value}"></td>
+				<td class="text-center">
+					<a th:href="@{/curvepoint/update/{id}(id=${cp.id})}">Edit</a>&nbsp;|&nbsp;
+					<a onclick="return confirm('Confirm delete?')"
+					   th:href="@{/curvepoint/delete/{id}(id=${cp.id})}">Delete</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

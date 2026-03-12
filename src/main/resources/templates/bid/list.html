@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Bid List</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: headerNav}"></div>
+
+<div class="container">
+	<div class="row mb-3">
+		<div class="col-6"><h2>Bid List</h2></div>
+		<div class="col-6 text-right">
+			<a class="btn btn-primary btn-sm" th:href="@{/bid/add}">Add New</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-bordered table-striped">
+			<thead>
+			<tr>
+				<th>Id</th>
+				<th>Account</th>
+				<th>Type</th>
+				<th>Bid Quantity</th>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="bid : ${bids}">
+				<td style="width: 10%" th:text="${bid.id}"></td>
+				<td th:text="${bid.account}"></td>
+				<td th:text="${bid.type}"></td>
+				<td th:text="${bid.bidQuantity}"></td>
+				<td class="text-center" style="width: 15%">
+					<a th:href="@{/bid/update/{id}(id=${bid.id})}">Edit</a>&nbsp;|&nbsp;
+					<a onclick="return confirm('Confirm delete?')"
+					   th:href="@{/bid/delete/{id}(id=${bid.id})}">Delete</a>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

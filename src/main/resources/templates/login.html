@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Login - Poseidon</title>
+</head>
+<body>
+<div class="container mt-5">
+	<div class="row justify-content-center">
+		<div class="col-md-4">
+			<h2 class="text-center">Login</h2>
+
+			<!-- Error message -->
+			<div class="alert alert-danger" th:if="${param.error}">
+				Invalid username or password.
+			</div>
+
+			<!-- Logout message -->
+			<div class="alert alert-success" th:if="${param.logout}">
+				You have been logged out.
+			</div>
+
+			<form class="mt-4" method="post" th:action="@{/login}">
+				<div class="mb-3">
+					<label class="form-label" for="username">Username</label>
+					<input autofocus class="form-control" id="username" name="username" required type="text">
+				</div>
+				<div class="mb-3">
+					<label class="form-label" for="password">Password</label>
+					<input class="form-control" id="password" name="password" required type="password">
+				</div>
+				<button class="btn btn-primary w-100" type="submit">Sign In</button>
+			</form>
+			<p class="mt-3 text-center">
+				No account? <a>Ask an admin to register you</a>
+			</p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

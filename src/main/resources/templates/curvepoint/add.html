@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Add New Curve Point</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: headerNav}"></div>
+
+<div class="container">
+	<div class="row">
+		<h2>Add New Curve Point</h2>
+	</div>
+
+	<div class="row">
+		<form action="#" class="form-horizontal" method="post" style="width: 100%"
+		      th:action="@{/curvepoint/validate}" th:object="${curvePoint}">
+
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="curveId">Curve Id</label>
+				<div class="col-sm-4">
+					<input class="form-control" id="curveId" placeholder="ex: 10" th:field="*{curveId}" type="number">
+					<p class="text-danger" th:errors="*{curveId}" th:if="${#fields.hasErrors('curveId')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="term">Term</label>
+				<div class="col-sm-10">
+					<input class="form-control col-4" id="term" placeholder="ex: 1.5" step="0.01" th:field="*{term}"
+					       type="number">
+					<p class="text-danger" th:errors="*{term}" th:if="${#fields.hasErrors('term')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="value">Value</label>
+				<div class="col-sm-10">
+					<input class="form-control col-4" id="value" placeholder="ex: 12.34" step="0.01" th:field="*{value}"
+					       type="number">
+					<p class="text-danger" th:errors="*{value}" th:if="${#fields.hasErrors('value')}"></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12">
+					<a class="btn btn-danger btn-sm" th:href="@{/curvepoint/list}">Cancel</a>
+					<input class="btn btn-primary btn-sm" type="submit" value="Add Curve Point">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

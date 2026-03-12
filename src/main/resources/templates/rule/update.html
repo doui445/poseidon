@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{fragments/head :: head-css}"></th:block>
+	<title>Update Rule Name</title>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: headerNav}"></div>
+
+<div class="container">
+	<div class="row">
+		<h2>Update New Rule Name</h2>
+	</div>
+
+	<div class="row">
+		<form action="#" class="form-horizontal" method="post" style="width: 100%"
+		      th:action="@{/rule/update/{id}(id=${rule.id})}" th:object="${rule}">
+
+			<input th:field="*{id}" type="hidden">
+
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="name">Name</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="name" placeholder="Name" th:field="*{name}" type="text">
+					<p class="text-danger" th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="description">Description</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="description" placeholder="Description" th:field="*{description}"
+					       type="text">
+					<p class="text-danger" th:errors="*{description}" th:if="${#fields.hasErrors('description')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="json">Json</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="json" placeholder="Json" th:field="*{json}" type="text">
+					<p class="text-danger" th:errors="*{json}" th:if="${#fields.hasErrors('json')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="template">Template</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="template" placeholder="Template" th:field="*{template}" type="text">
+					<p class="text-danger" th:errors="*{template}" th:if="${#fields.hasErrors('template')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="sql">SQL</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="sql" placeholder="SQL" th:field="*{sql}" type="text">
+					<p class="text-danger" th:errors="*{sql}" th:if="${#fields.hasErrors('sql')}"></p>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 col-form-label" for="sqlPart">SQL Part</label>
+				<div class="col-sm-10">
+					<input class="col-4" id="sqlPart" placeholder="SQL Part" th:field="*{sqlPart}" type="text">
+					<p class="text-danger" th:errors="*{sqlPart}" th:if="${#fields.hasErrors('sqlPart')}"></p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-12">
+					<a class="btn btn-danger btn-sm" th:href="@{/rule/list}">Cancel</a>
+					<input class="btn btn-primary btn-sm" type="submit" value="Update Rule Name">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>

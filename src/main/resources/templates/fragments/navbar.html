@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="headerNav">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+		<div class="container">
+			<a class="navbar-brand" th:href="@{/}">Poseidon App</a>
+
+			<div class="collapse navbar-collapse">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item"><a class="nav-link" th:href="@{/bid/list}">Bids</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/curvepoint/list}">Curve Points</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/rating/list}">Ratings</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/trade/list}">Trades</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/rule/list}">Rules</a></li>
+					<!-- Lien visible uniquement pour les admins -->
+					<li class="nav-item" sec:authorize="hasRole('ADMIN')">
+						<a class="nav-link" th:href="@{/user/list}">Admin</a>
+					</li>
+				</ul>
+
+				<div class="navbar-text">
+					<span class="user-info mr-3">
+						Logged in: <b sec:authentication="name">Guest</b>
+					</span>
+					<form class="btn" method="post" th:action="@{/logout}">
+						<button class="btn btn-outline-light btn-link nav-link btn-sm" type="submit">Logout</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</nav>
+</div>
+</body>
+</html>
