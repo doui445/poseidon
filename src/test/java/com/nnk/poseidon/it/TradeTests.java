@@ -31,7 +31,7 @@ public class TradeTests {
     private TradeRepository tradeRepository;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "user")
     @DisplayName("Should display the trade list page with updated data from database")
     public void tradeTest() throws Exception {
         Trade trade = Trade.builder()
@@ -64,7 +64,7 @@ public class TradeTests {
         // Delete
         Integer id = trade.getId();
         tradeRepository.delete(trade);
-        Optional<Trade> tradeList = tradeRepository.findById(id);
-        assertFalse(tradeList.isPresent());
+        Optional<Trade> optionalTrade = tradeRepository.findById(id);
+        assertFalse(optionalTrade.isPresent());
     }
 }

@@ -31,7 +31,7 @@ public class RatingTests {
     private RatingRepository ratingRepository;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "user")
     @DisplayName("Should display the rating list page with updated data from database")
     public void ratingIntegrationTest() throws Exception {
         Rating rating = Rating.builder()
@@ -65,7 +65,7 @@ public class RatingTests {
         // Delete
         Integer id = rating.getId();
         ratingRepository.delete(rating);
-        Optional<Rating> ratingList = ratingRepository.findById(id);
-        assertFalse(ratingList.isPresent());
+        Optional<Rating> optionalRating = ratingRepository.findById(id);
+        assertFalse(optionalRating.isPresent());
     }
 }

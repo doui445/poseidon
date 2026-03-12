@@ -31,7 +31,7 @@ public class BidTests {
     private BidRepository bidRepository;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "user")
     @DisplayName("Should display the bid list page with updated data from database")
     public void bidIntegrationTest() throws Exception {
         Bid bid = Bid.builder()
@@ -64,7 +64,7 @@ public class BidTests {
         // Delete
         Integer id = bid.getId();
         bidRepository.delete(bid);
-        Optional<Bid> bidList = bidRepository.findById(id);
-        assertFalse(bidList.isPresent());
+        Optional<Bid> optionalBid = bidRepository.findById(id);
+        assertFalse(optionalBid.isPresent());
     }
 }

@@ -31,7 +31,7 @@ public class RuleTests {
     private RuleRepository ruleRepository;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "user")
     @DisplayName("Should display the rule list page with updated data from database")
     public void ruleIntegrationTest() throws Exception {
         Rule rule = Rule.builder()
@@ -67,7 +67,7 @@ public class RuleTests {
         // Delete
         Integer id = rule.getId();
         ruleRepository.delete(rule);
-        Optional<Rule> ruleList = ruleRepository.findById(id);
-        assertFalse(ruleList.isPresent());
+        Optional<Rule> optionalRule = ruleRepository.findById(id);
+        assertFalse(optionalRule.isPresent());
     }
 }

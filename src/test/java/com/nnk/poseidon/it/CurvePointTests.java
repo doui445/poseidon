@@ -31,7 +31,7 @@ public class CurvePointTests {
     private CurvePointRepository curvePointRepository;
 
     @Test
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "user")
     @DisplayName("Should display the curvePoint list page with updated data from database")
     public void curvePointIntegrationTest() throws Exception {
         CurvePoint curvePoint = CurvePoint.builder()
@@ -64,7 +64,7 @@ public class CurvePointTests {
         // Delete
         Integer id = curvePoint.getId();
         curvePointRepository.delete(curvePoint);
-        Optional<CurvePoint> curvePointList = curvePointRepository.findById(id);
-        assertFalse(curvePointList.isPresent());
+        Optional<CurvePoint> optionalCurvePoint = curvePointRepository.findById(id);
+        assertFalse(optionalCurvePoint.isPresent());
     }
 }

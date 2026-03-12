@@ -26,7 +26,7 @@ public class BidServiceTest {
     private BidRepository bidRepository;
 
     @InjectMocks
-    private BidServiceImpl bidListService;
+    private BidServiceImpl bidService;
 
     private AutoCloseable mocks;
 
@@ -35,7 +35,7 @@ public class BidServiceTest {
     @BeforeEach
     void setUp() {
         mocks = MockitoAnnotations.openMocks(this);
-        
+
         bid = Bid.builder()
                 .id(1)
                 .account("account")
@@ -50,11 +50,11 @@ public class BidServiceTest {
     }
 
     @Test
-    @DisplayName("getBidById should return a bidList when bidList exists")
+    @DisplayName("getBidById should return a bid when bid exists")
     void testGetBidByIdFound() {
         given(bidRepository.findById(1)).willReturn(Optional.of(bid));
 
-        Optional<Bid> result = bidListService.getBidById(1);
+        Optional<Bid> result = bidService.getBidById(1);
 
         assertThat(result).isPresent();
         assertThat(result.get().getAccount()).isEqualTo("account");
@@ -62,23 +62,23 @@ public class BidServiceTest {
     }
 
     @Test
-    @DisplayName("getBidById should return empty when bidList does not exist")
+    @DisplayName("getBidById should return empty when bid does not exist")
     void testGetBidByIdNotFound() {
         given(bidRepository.findById(2)).willReturn(Optional.empty());
 
-        Optional<Bid> result = bidListService.getBidById(2);
+        Optional<Bid> result = bidService.getBidById(2);
 
         assertThat(result).isEmpty();
         verify(bidRepository, times(1)).findById(2);
     }
 
     @Test
-    @DisplayName("saveBid should save and return the bidList")
+    @DisplayName("saveBid should save and return the bid")
     void testSaveBid() {
         given(bidRepository.save(any())).willReturn(bid);
 
         BidRequest request = new BidRequest(bid.getId(), bid.getAccount(), bid.getType(), bid.getBidQuantity());
-        Bid savedBid = bidListService.saveBid(request);
+        Bid savedBid = bidService.saveBid(request);
 
         assertThat(savedBid).isNotNull();
         assertThat(savedBid.getAccount()).isEqualTo("account");
@@ -86,7 +86,7 @@ public class BidServiceTest {
     }
 
     @Test
-    @DisplayName("updateBid should update and return the bidList")
+    @DisplayName("updateBid should update and return the bid")
     void testUpdateBid() {
         Bid newBid = bid;
         newBid.setAccount("newAccount");
@@ -95,7 +95,7 @@ public class BidServiceTest {
         given(bidRepository.findById(1)).willReturn(Optional.of(bid));
 
         BidRequest request = new BidRequest(bid.getId(), "newAccount", bid.getType(), bid.getBidQuantity());
-        Bid savedBid = bidListService.updateBid(1, request);
+        Bid savedBid = bidService.updateBid(1, request);
 
         assertThat(savedBid).isNotNull();
         assertThat(savedBid.getAccount()).isEqualTo("newAccount");
@@ -103,11 +103,11 @@ public class BidServiceTest {
     }
 
     @Test
-    @DisplayName("deleteBidById should delete bidList by id")
+    @DisplayName("deleteBidById should delete bid by id")
     void testDeleteBidByIdById() {
         given(bidRepository.findById(1)).willReturn(Optional.of(bid));
 
-        bidListService.deleteBidById(1);
+        bidService.deleteBidById(1);
 
         verify(bidRepository, times(1)).delete(bid);
     }
