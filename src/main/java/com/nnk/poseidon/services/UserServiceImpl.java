@@ -1,6 +1,7 @@
 package com.nnk.poseidon.services;
 
 import com.nnk.poseidon.domain.User;
+import com.nnk.poseidon.domain.dto.UserRegistrationDTO;
 import com.nnk.poseidon.domain.dto.UserUpdateDTO;
 import com.nnk.poseidon.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,25 +36,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
-        if (user.getId() != null) {
-            User existingUser = userRepository.findById(user.getId()).orElse(null);
-            if (existingUser != null) {
-                if (user.getPassword() == null || user.getPassword().isEmpty()) {
-                    user.setPassword(existingUser.getPassword());
-                } else {
-                    user.setPassword(passwordEncoder.encode(user.getPassword()));
-                }
-            }
+    public User saveUser(UserRegistrationDTO userRegistrations) {
+        if (userRegistrations.username() != null && userRepository.findByUsername(userRegistrations.username()).isPresent()) {
+            throw new IllegalArgumentException("User already exist");
         }
+        User user = new User();
+        user.setUsername(userRegistrations.username());
+        if (!userRegistrations.password().matches(PASSWORD_PATTERN)) {
+            throw new IllegalArgumentException("Password does not meet security requirements");
+        }
+        user.setFullname(userRegistrations.fullname());
+        user.setPassword(passwordEncoder.encode(userRegistrations.password()));
+        user.setRole(userRegistrations.role());
         return userRepository.save(user);
     }
 
     @Override
-    public void updateUser(UserUpdateDTO userUpdates) {
+    public User updateUser(UserUpdateDTO userUpdates) {
         User user = userRepository.findById(userUpdates.id())
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userUpdates.id()));
-
+                .orElseThrow(() -> new IllegalArgumentException("Invalid User id: " + userUpdates.id()));
         user.setUsername(userUpdates.username());
         user.setFullname(userUpdates.fullname());
         if (userUpdates.role() != null && !userUpdates.role().isBlank()) user.setRole(userUpdates.role());
@@ -64,11 +65,26 @@ public class UserServiceImpl implements UserService {
             }
             user.setPassword(passwordEncoder.encode(newPassword));
         }
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(Integer id) {
-        userRepository.deleteById(id);
+    public void deleteUserById(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid User Id:" + id));
+        userRepository.delete(user);
+    }
+
+    @Override
+    public UserUpdateDTO getUpdateDTO(Integer id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid User Id:" + id));
+        return new UserUpdateDTO(
+                user.getId(),
+                user.getUsername(),
+                "",
+                user.getFullname(),
+                user.getRole()
+        );
     }
 }

@@ -7,6 +7,7 @@ public record CurvePointRequest(
         Integer id,
 
         @NotNull(message = "Curve Id is mandatory")
+        @Positive(message = "Must be a positive number")
         Integer curveId,
 
         @NotNull(message = "Term is mandatory")

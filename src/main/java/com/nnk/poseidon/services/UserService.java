@@ -1,6 +1,7 @@
 package com.nnk.poseidon.services;
 
 import com.nnk.poseidon.domain.User;
+import com.nnk.poseidon.domain.dto.UserRegistrationDTO;
 import com.nnk.poseidon.domain.dto.UserUpdateDTO;
 
 import java.util.Optional;
@@ -13,9 +14,11 @@ public interface UserService {
 
     Optional<User> getUserByUsername(String username);
 
-    User saveUser(User user);
+    User saveUser(UserRegistrationDTO userRegistrations);
 
-    void updateUser(UserUpdateDTO userUpdates);
+    User updateUser(UserUpdateDTO userUpdates);
 
-    void deleteUser(Integer id);
+    void deleteUserById(Integer id);
+
+    UserUpdateDTO getUpdateDTO(Integer id);
 }

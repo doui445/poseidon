@@ -17,24 +17,14 @@ public class RuleController {
     private final RuleService ruleService;
 
     @GetMapping("/list")
-    public String home(Model model) {
+    public String rulesPage(Model model) {
         model.addAttribute("rules", ruleService.getRules());
         return "rule/list";
     }
 
     @GetMapping("/add")
-    public String addRuleNameForm(Model model) {
+    public String showAddForm(Model model) {
         model.addAttribute("rule", new RuleRequest(null, "", "", "", "", "", ""));
-        return "rule/add";
-    }
-
-    @PostMapping("/validate")
-    public String validate(@Valid @ModelAttribute("rule") RuleRequest request,
-                           BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            ruleService.saveRule(request);
-            return "redirect:/rule/list";
-        }
         return "rule/add";
     }
 
@@ -46,10 +36,20 @@ public class RuleController {
         return "rule/update";
     }
 
+    @PostMapping("/validate")
+    public String validate(@Valid @ModelAttribute("rule") RuleRequest request,
+                           BindingResult result) {
+        if (!result.hasErrors()) {
+            ruleService.saveRule(request);
+            return "redirect:/rule/list";
+        }
+        return "rule/add";
+    }
+
     @PostMapping("/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id,
                                  @Valid @ModelAttribute("rule") RuleRequest request,
-                                 BindingResult result, Model model) {
+                                 BindingResult result) {
         if (!result.hasErrors()) {
             ruleService.updateRule(id, request);
             return "redirect:/rule/list";
@@ -58,7 +58,7 @@ public class RuleController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+    public String deleteRuleName(@PathVariable("id") Integer id) {
         ruleService.deleteRuleById(id);
         return "redirect:/rule/list";
     }
